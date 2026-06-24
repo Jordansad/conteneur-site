@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conteneur Service – Vente & Location de Conteneurs Maritimes</title>
+  <meta name="description" content="Spécialiste vente et location conteneurs maritimes en France. Stock 500+ unités, livraison 48h, devis gratuit sous 24h.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#" class="logo">
+        <div class="logo__icon">📦</div>
+        <div class="logo__text">
+          <span class="logo__name">CONTENEUR</span>
+          <span class="logo__sub">SERVICE</span>
+        </div>
+      </a>
+
+      <nav class="nav" id="nav">
+        <a href="#services"      class="nav__link" data-i18n="nav_services">Services</a>
+        <a href="#catalogue"     class="nav__link" data-i18n="nav_catalogue">Catalogue</a>
+        <a href="#realisations"  class="nav__link" data-i18n="nav_realisations">Réalisations</a>
+        <a href="#pourquoi"      class="nav__link" data-i18n="nav_pourquoi">Pourquoi nous</a>
+        <a href="#faq"           class="nav__link" data-i18n="nav_faq">FAQ</a>
+        <a href="#contact"       class="nav__link" data-i18n="nav_contact">Contact</a>
+      </nav>
+
+      <div class="header__actions">
+        <div class="lang-switcher">
+          <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
+          <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+          <button class="lang-btn" data-lang="de" onclick="setLang('de')">DE</button>
+        </div>
+        <button class="quote-btn" id="quoteBtn">
+          <span data-i18n="quote_btn">Mon devis</span>
+          <span class="quote-count" id="quoteCount">0</span>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" id="hero">
+    <div class="hero__bg"></div>
+    <div class="container hero__inner">
+
+      <div class="hero__content" data-animate>
+        <p class="hero__eyebrow" data-i18n="hero_eyebrow">Vente &amp; Location · Livraison France entière</p>
+        <h1 class="hero__title">
+          <span data-i18n="hero_title_1">Conteneurs maritimes</span><br>
+          <span class="hero__accent" data-i18n="hero_title_2">à votre mesure</span>
+        </h1>
+        <p class="hero__desc" data-i18n="hero_desc">Stock permanent de plus de 500 conteneurs 10, 20 et 40 pieds. Livraison rapide partout en France.</p>
+        <div class="hero__cta">
+          <a href="#catalogue" class="btn btn--primary" data-i18n="hero_cta_stock">Voir le stock →</a>
+          <button class="btn btn--outline open-quote-drawer" data-i18n="hero_cta_quote">Devis gratuit</button>
+        </div>
+      </div>
+
+      <div class="hero__visual" data-animate="fade-left">
+        <div class="container-3d">
+          <div class="c3d__body">
+            <div class="c3d__door"></div>
+            <div class="c3d__ribh"></div>
+            <div class="c3d__ribh c3d__ribh--2"></div>
+            <div class="c3d__ribh c3d__ribh--3"></div>
+            <div class="c3d__ribv"></div>
+            <div class="c3d__ribv c3d__ribv--2"></div>
+          </div>
+          <div class="c3d__label">20 FT · ISO 668</div>
+        </div>
+        <div class="hero__stats">
+          <div class="stat"><span class="stat__num">500+</span><span class="stat__label" data-i18n="hero_stat_1">En stock</span></div>
+          <div class="stat"><span class="stat__num">6</span><span class="stat__label" data-i18n="hero_stat_2">Dépôts France</span></div>
+          <div class="stat"><span class="stat__num">48h</span><span class="stat__label" data-i18n="hero_stat_3">Livraison</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero__scroll"><span></span></div>
+  </section>
+
+  <!-- ═══ SERVICES ═══ -->
+  <section class="section" id="services">
+    <div class="container">
+      <p class="section__eyebrow" data-animate data-i18n="svc_eyebrow">Nos prestations</p>
+      <h2 class="section__title" data-animate data-i18n="svc_title">Tout ce dont vous avez besoin</h2>
+      <div class="services__grid">
+        <div class="service-card" data-animate>
+          <span class="service-card__icon">🏗️</span>
+          <h3 data-i18n="svc_1_title">Vente</h3>
+          <p data-i18n="svc_1_desc">Conteneurs neufs et occasions certifiés. 10, 20 et 40 pieds en Standard, High Cube et Open Top.</p>
+          <a href="#catalogue" class="service-card__link" data-i18n="svc_1_link">Voir le stock →</a>
+        </div>
+        <div class="service-card" data-animate>
+          <span class="service-card__icon">🔑</span>
+          <h3 data-i18n="svc_2_title">Location</h3>
+          <p data-i18n="svc_2_desc">Formules flexibles de 1 mois à plusieurs années. Livraison sur site et récupération incluses.</p>
+          <a href="#catalogue" class="service-card__link" data-i18n="svc_2_link">Voir les tarifs →</a>
+        </div>
+        <div class="service-card" data-animate>
+          <span class="service-card__icon">🔧</span>
+          <h3 data-i18n="svc_3_title">Aménagement</h3>
+          <p data-i18n="svc_3_desc">Transformation sur mesure : bureaux de chantier, ateliers, vestiaires, logements modulaires.</p>
+          <a href="#contact" class="service-card__link" data-i18n="svc_3_link">Nous contacter →</a>
+        </div>
+        <div class="service-card" data-animate>
+          <span class="service-card__icon">🚚</span>
+          <h3 data-i18n="svc_4_title">Transport</h3>
+          <p data-i18n="svc_4_desc">Livraison et reprise par camion grue ou remorque spécialisée, partout en France.</p>
+          <a href="#contact" class="service-card__link" data-i18n="svc_4_link">Calculer →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CATALOGUE ═══ -->
+  <section class="section section--light" id="catalogue">
+    <div class="container">
+      <p class="section__eyebrow" data-animate data-i18n="cat_eyebrow">Disponible immédiatement</p>
+      <h2 class="section__title" data-animate data-i18n="cat_title">Catalogue de conteneurs</h2>
+
+      <div class="filters" data-animate>
+        <button class="filter-btn filter-btn--active" data-filter="all" data-i18n="filter_all">Tout le stock</button>
+        <button class="filter-btn" data-filter="vente"    data-i18n="filter_vente">Vente</button>
+        <button class="filter-btn" data-filter="location" data-i18n="filter_location">Location</button>
+        <button class="filter-btn" data-filter="20ft"     data-i18n="filter_20ft">20 pieds</button>
+        <button class="filter-btn" data-filter="40ft"     data-i18n="filter_40ft">40 pieds</button>
+        <button class="filter-btn" data-filter="amenage"  data-i18n="filter_amenage">Aménagé</button>
+      </div>
+
+      <div class="catalogue__grid" id="catalogueGrid">
+        <!-- Chargé dynamiquement depuis data.json -->
+        <div class="catalogue__loading">⏳ Chargement...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA BANNER ═══ -->
+  <section class="cta-banner">
+    <div class="container cta-banner__inner" data-animate>
+      <div>
+        <h2 data-i18n="cta_title">Un projet hors standard ?</h2>
+        <p data-i18n="cta_desc">Reefer, open-top, flat-rack, aménagements sur mesure — on a toujours une solution adaptée.</p>
+      </div>
+      <button class="btn btn--white open-quote-drawer" data-i18n="cta_btn">📋 Demander un devis gratuit</button>
+    </div>
+  </section>
+
+  <!-- ═══ RÉALISATIONS ═══ -->
+  <section class="section section--light" id="realisations">
+    <div class="container">
+      <p class="section__eyebrow" data-animate data-i18n="real_eyebrow">Nos chantiers</p>
+      <h2 class="section__title" data-animate data-i18n="real_title">Quelques réalisations</h2>
+      <div class="realisations__grid">
+        <div class="real-card" data-animate>
+          <div class="real-card__img">
+            <img src="https://images.unsplash.com/photo-1590496793929-36417d3117de?w=700&q=80" alt="Dépôt logistique">
+            <span class="real-card__tag" data-i18n="real_1_tag">Dépôt logistique</span>
+          </div>
+          <p class="real-card__label" data-i18n="real_1_label">Stock de conteneurs · Île-de-France</p>
+        </div>
+        <div class="real-card" data-animate>
+          <div class="real-card__img">
+            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=700&q=80" alt="Bureau de chantier">
+            <span class="real-card__tag" data-i18n="real_2_tag">Bureau de chantier</span>
+          </div>
+          <p class="real-card__label" data-i18n="real_2_label">Base vie chantier BTP · Lyon</p>
+        </div>
+        <div class="real-card" data-animate>
+          <div class="real-card__img">
+            <img src="https://images.unsplash.com/photo-1519003300449-424ad0405076?w=700&q=80" alt="Transport maritime">
+            <span class="real-card__tag" data-i18n="real_3_tag">Transport maritime</span>
+          </div>
+          <p class="real-card__label" data-i18n="real_3_label">Exportation conteneurs · Le Havre</p>
+        </div>
+        <div class="real-card" data-animate>
+          <div class="real-card__img">
+            <img src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=700&q=80" alt="Stockage industriel">
+            <span class="real-card__tag" data-i18n="real_4_tag">Stockage industriel</span>
+          </div>
+          <p class="real-card__label" data-i18n="real_4_label">Entrepôt modulaire · Bordeaux</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ POURQUOI NOUS ═══ -->
+  <section class="section" id="pourquoi">
+    <div class="container">
+      <p class="section__eyebrow" data-animate data-i18n="why_eyebrow">Nos engagements</p>
+      <h2 class="section__title" data-animate data-i18n="why_title">Pourquoi choisir Conteneur Service ?</h2>
+      <div class="why__grid">
+        <div class="why-item" data-animate><div class="why-item__num">01</div><h3 data-i18n="why_1_title">Stock permanent</h3><p data-i18n="why_1_desc">Plus de 500 conteneurs disponibles immédiatement répartis dans nos 6 dépôts régionaux en France.</p></div>
+        <div class="why-item" data-animate><div class="why-item__num">02</div><h3 data-i18n="why_2_title">Livraison 48h</h3><p data-i18n="why_2_desc">Pose sur site par camion grue ou remorque spécialisée. Partout en France métropolitaine, délai garanti.</p></div>
+        <div class="why-item" data-animate><div class="why-item__num">03</div><h3 data-i18n="why_3_title">Certifiés & garantis</h3><p data-i18n="why_3_desc">Chaque conteneur est inspecté, certifié étanche et fourni avec rapport de contrôle. Garantie 12 mois.</p></div>
+        <div class="why-item" data-animate><div class="why-item__num">04</div><h3 data-i18n="why_4_title">Devis sous 24h</h3><p data-i18n="why_4_desc">Réponse garantie sous 24h ouvrées avec prix tout compris : produit, transport et manutention inclus.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FAQ ═══ -->
+  <section class="section section--light" id="faq">
+    <div class="container" style="max-width:780px">
+      <p class="section__eyebrow" data-animate data-i18n="faq_eyebrow">Questions fréquentes</p>
+      <h2 class="section__title" data-animate data-i18n="faq_title">On répond à tout</h2>
+      <div class="faq__list" data-animate>
+        <details class="faq__item"><summary data-i18n="faq_1_q">Livrez-vous partout en France ?</summary><p data-i18n="faq_1_a">Oui, nous livrons sur toute la France métropolitaine...</p></details>
+        <details class="faq__item"><summary data-i18n="faq_2_q">Quel est le délai de livraison moyen ?</summary><p data-i18n="faq_2_a">En général 48 à 72h après confirmation...</p></details>
+        <details class="faq__item"><summary data-i18n="faq_3_q">Proposez-vous la location longue durée ?</summary><p data-i18n="faq_3_a">Oui, de 1 mois à plusieurs années...</p></details>
+        <details class="faq__item"><summary data-i18n="faq_4_q">Les conteneurs sont-ils étanches ?</summary><p data-i18n="faq_4_a">Tous nos conteneurs sont inspectés et certifiés étanches...</p></details>
+        <details class="faq__item"><summary data-i18n="faq_5_q">Puis-je visiter un dépôt avant d'acheter ?</summary><p data-i18n="faq_5_a">Absolument, sur rendez-vous dans nos 6 dépôts...</p></details>
+        <details class="faq__item"><summary data-i18n="faq_6_q">Quels modes de paiement acceptez-vous ?</summary><p data-i18n="faq_6_a">Virement bancaire, chèque de banque et règlement comptant...</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT ═══ -->
+  <section class="section" id="contact">
+    <div class="container">
+      <p class="section__eyebrow" data-animate data-i18n="contact_eyebrow">On vous répond sous 24h</p>
+      <h2 class="section__title" data-animate data-i18n="contact_title">Contactez-nous</h2>
+      <div class="contact__grid">
+        <div class="contact__info" data-animate>
+          <div class="contact-item">
+            <span class="contact-item__icon">📞</span>
+            <div><strong data-i18n="contact_phone_lbl">Téléphone</strong><a href="tel:+33000000000" class="contact-phone">+33 0 00 00 00 00</a></div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-item__icon">📧</span>
+            <div><strong data-i18n="contact_email_lbl">Email</strong><a href="mailto:contact@conteneurservice.fr" class="contact-email">contact@conteneurservice.fr</a></div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-item__icon">📍</span>
+            <div><strong data-i18n="contact_address_lbl">Siège social</strong><span class="contact-address">Paris, Île-de-France</span></div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-item__icon">🕐</span>
+            <div><strong data-i18n="contact_hours_lbl">Horaires</strong><span class="contact-hours">Lun – Ven · 8h à 18h</span></div>
+          </div>
+          <!-- Bouton devis direct -->
+          <button class="btn btn--primary open-quote-drawer" style="margin-top:1.5rem;width:100%;justify-content:center" data-i18n="cta_btn">📋 Demander un devis gratuit</button>
+        </div>
+
+        <form class="contact__form" id="contactForm" data-animate="fade-left">
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="form_prenom">Prénom *</label>
+              <input type="text" name="prenom" required placeholder="Jean">
+            </div>
+            <div class="form-group">
+              <label data-i18n="form_nom">Nom *</label>
+              <input type="text" name="nom" required placeholder="Dupont">
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-i18n="form_email">Email *</label>
+            <input type="email" name="email" required placeholder="jean.dupont@example.com">
+          </div>
+          <div class="form-group">
+            <label data-i18n="form_tel">Téléphone</label>
+            <input type="tel" name="tel" placeholder="+33 6 00 00 00 00">
+          </div>
+          <div class="form-group">
+            <label data-i18n="form_message">Message *</label>
+            <textarea name="message" required rows="4" data-i18n="form_message_ph" placeholder="Décrivez votre besoin..."></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center" data-i18n="form_submit_contact">Envoyer le message →</button>
+          <p class="form__success" id="formSuccess" data-i18n="form_ok_contact">✅ Message envoyé ! Nous vous répondons sous 24h.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="#" class="logo"><div class="logo__icon">📦</div><div class="logo__text"><span class="logo__name">CONTENEUR</span><span class="logo__sub">SERVICE</span></div></a>
+        <p data-i18n="footer_desc">Spécialiste vente et location de conteneurs maritimes en France.</p>
+      </div>
+      <div class="footer__col">
+        <h4 data-i18n="footer_svc">Services</h4>
+        <a href="#services" data-i18n="svc_1_title">Vente</a>
+        <a href="#services" data-i18n="svc_2_title">Location</a>
+        <a href="#services" data-i18n="svc_3_title">Aménagement</a>
+        <a href="#services" data-i18n="svc_4_title">Transport</a>
+      </div>
+      <div class="footer__col">
+        <h4 data-i18n="footer_cat">Catalogue</h4>
+        <a href="#catalogue" data-i18n="filter_20ft">20 pieds</a>
+        <a href="#catalogue" data-i18n="filter_40ft">40 pieds</a>
+        <a href="#catalogue">High Cube</a>
+        <a href="#catalogue" data-i18n="filter_amenage">Aménagé</a>
+      </div>
+      <div class="footer__col">
+        <h4 data-i18n="footer_contact">Contact</h4>
+        <a href="tel:+33000000000" class="contact-phone">+33 0 00 00 00 00</a>
+        <a href="mailto:contact@conteneurservice.fr" class="contact-email">contact@conteneurservice.fr</a>
+        <a href="#contact" data-i18n="nav_contact">Contact</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <p><span data-i18n="footer_copy">© 2026 Conteneur Service · Tous droits réservés ·</span> <a href="#" data-i18n="footer_legal">Mentions légales</a> · <a href="#" data-i18n="footer_cgv">CGV</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ QUOTE DRAWER ═══ -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <aside class="quote-drawer" id="quoteDrawer" role="dialog">
+    <div class="quote-drawer__header">
+      <h2 data-i18n="drawer_title">📋 Mon devis</h2>
+      <button class="quote-drawer__close" id="drawerClose">✕</button>
+    </div>
+    <div class="quote-drawer__items" id="drawerItems"></div>
+    <div class="quote-drawer__form" id="drawerForm">
+      <h3 data-i18n="drawer_form_title">Vos coordonnées</h3>
+      <form id="quoteForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label data-i18n="form_prenom">Prénom *</label>
+            <input type="text" name="prenom" required placeholder="Jean">
+          </div>
+          <div class="form-group">
+            <label data-i18n="form_nom">Nom *</label>
+            <input type="text" name="nom" required placeholder="Dupont">
+          </div>
+        </div>
+        <div class="form-group">
+          <label data-i18n="form_email">Email *</label>
+          <input type="email" name="email" required placeholder="jean@example.com">
+        </div>
+        <div class="form-group">
+          <label data-i18n="form_tel_req">Téléphone *</label>
+          <input type="tel" name="tel" required placeholder="+33 6 00 00 00 00">
+        </div>
+        <div class="form-group">
+          <label data-i18n="form_precisions">Précisions</label>
+          <textarea name="message" rows="3" data-i18n="form_precisions_ph" placeholder="Lieu de livraison, dates souhaitées..."></textarea>
+        </div>
+        <div class="quote-send-btns">
+          <button type="button" class="btn btn--whatsapp" id="sendWhatsapp">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span data-i18n="send_whatsapp">WhatsApp</span>
+          </button>
+          <button type="submit" class="btn btn--primary btn--email" id="sendEmail">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+            <span data-i18n="send_email">Email</span>
+          </button>
+        </div>
+        <p class="form__success" id="quoteSuccess" data-i18n="form_ok_quote">✅ Devis envoyé ! Nous vous contactons sous 24h.</p>
+      </form>
+    </div>
+  </aside>
+
+  <!-- ═══ WHATSAPP ═══ -->
+  <a href="https://wa.me/33000000000" class="whatsapp-btn" id="whatsappBtn" target="_blank" rel="noopener" title="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin – Conteneur Service</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="js/data.js"></script>
+  <style>
+    :root {
+      --primary: #0B2341;
+      --accent: #F58220;
+      --white: #fff;
+      --light: #F4F6FA;
+      --border: #DDE3EE;
+      --text: #1A2332;
+      --text-light: #5A6A80;
+      --radius: 10px;
+      --danger: #dc2626;
+      --success: #059669;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:var(--light);color:var(--text);min-height:100vh}
+    a{color:inherit;text-decoration:none}
+    button{cursor:pointer;border:none;background:none;font-family:inherit}
+    input,textarea,select{font-family:inherit}
+
+    /* ── Login ── */
+    .login-page{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--primary)}
+    .login-box{background:var(--white);border-radius:16px;padding:2.5rem;width:360px;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.3)}
+    .login-box h1{font-family:'Outfit',sans-serif;font-size:1.5rem;font-weight:800;color:var(--primary);margin-bottom:.25rem}
+    .login-box p{color:var(--text-light);font-size:.9rem;margin-bottom:1.75rem}
+    .login-box input{width:100%;padding:.8rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius);font-size:1rem;margin-bottom:1rem;color:var(--text)}
+    .login-box input:focus{outline:none;border-color:var(--accent)}
+    .login-error{color:var(--danger);font-size:.85rem;margin-bottom:.75rem;display:none}
+
+    /* ── App layout ── */
+    #app{display:none;min-height:100vh}
+    .topbar{background:var(--primary);padding:.85rem 1.5rem;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+    .topbar__logo{font-family:'Outfit',sans-serif;font-weight:800;font-size:1rem;color:var(--white);display:flex;align-items:center;gap:.5rem}
+    .topbar__badge{background:var(--accent);color:var(--white);font-size:.7rem;padding:.15rem .5rem;border-radius:50px;font-weight:700}
+    .topbar__actions{margin-left:auto;display:flex;gap:.6rem}
+    .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.25rem;border-radius:var(--radius);font-size:.88rem;font-weight:600;transition:.2s ease;cursor:pointer;border:none}
+    .btn--primary{background:var(--accent);color:var(--white)}
+    .btn--primary:hover{background:#d96e15}
+    .btn--ghost{background:rgba(255,255,255,.1);color:var(--white)}
+    .btn--ghost:hover{background:rgba(255,255,255,.18)}
+    .btn--danger{background:rgba(220,38,38,.1);color:var(--danger)}
+    .btn--danger:hover{background:rgba(220,38,38,.18)}
+    .btn--success{background:var(--success);color:var(--white)}
+    .btn--sm{padding:.4rem .9rem;font-size:.82rem}
+
+    /* ── Tabs ── */
+    .tabs{background:var(--white);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;gap:0}
+    .tab{padding:1rem 1.4rem;font-size:.9rem;font-weight:600;color:var(--text-light);border-bottom:3px solid transparent;transition:.2s ease;cursor:pointer}
+    .tab.active{color:var(--primary);border-bottom-color:var(--accent)}
+    .tab-panel{display:none;padding:2rem 1.5rem;max-width:1100px}
+    .tab-panel.active{display:block}
+
+    /* ── Cards ── */
+    .card{background:var(--white);border-radius:var(--radius);border:1px solid var(--border);padding:1.5rem;margin-bottom:1.25rem}
+    .card__header{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+    .card__title{font-family:'Outfit',sans-serif;font-weight:700;font-size:1rem;color:var(--primary);flex:1}
+    .card__actions{display:flex;gap:.5rem}
+
+    /* ── Form fields ── */
+    .form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .form-group{display:flex;flex-direction:column;gap:.35rem}
+    .form-group.span-2{grid-column:span 2}
+    .form-group.span-3{grid-column:span 3}
+    .form-group label{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-light)}
+    .form-group input,.form-group textarea,.form-group select{
+      padding:.65rem .9rem;border:1.5px solid var(--border);border-radius:8px;
+      font-size:.92rem;color:var(--text);transition:.2s ease;background:var(--white)
+    }
+    .form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(245,130,32,.12)}
+    .form-group textarea{resize:vertical;min-height:80px}
+
+    /* ── Image preview ── */
+    .img-preview{width:100%;height:140px;border-radius:8px;border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;background:var(--light);overflow:hidden;font-size:.85rem;color:var(--text-light);margin-top:.4rem}
+    .img-preview img{width:100%;height:100%;object-fit:cover}
+
+    /* ── Add container form ── */
+    .add-section{background:var(--white);border-radius:var(--radius);border:2px dashed var(--accent);padding:1.5rem;margin-bottom:1.5rem}
+    .add-section h3{font-family:'Outfit',sans-serif;font-weight:700;font-size:1rem;color:var(--accent);margin-bottom:1.25rem}
+
+    /* ── Specs editor ── */
+    .specs-list{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem}
+    .spec-row{display:flex;gap:.5rem;align-items:center}
+    .spec-row input{flex:1}
+    .spec-remove{width:30px;height:30px;background:rgba(220,38,38,.08);color:var(--danger);border-radius:6px;font-size:.85rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .spec-remove:hover{background:rgba(220,38,38,.15)}
+
+    /* ── Badge select ── */
+    .badge-preview{display:inline-block;padding:.2rem .6rem;border-radius:50px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+    .badge-dispo{background:#d1fae5;color:#065f46}
+    .badge-loc{background:#dbeafe;color:#1e40af}
+    .badge-special{background:#fef3c7;color:#92400e}
+    .badge-reserve{background:#fce7f3;color:#9d174d}
+
+    /* ── Contact tab ── */
+    .contact-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:600px}
+
+    /* ── Settings tab ── */
+    .settings-section{max-width:520px}
+    .settings-section h3{font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:700;color:var(--primary);margin-bottom:1rem;padding-bottom:.6rem;border-bottom:1px solid var(--border)}
+
+    /* ── Publish bar ── */
+    .publish-bar{position:fixed;bottom:0;left:0;right:0;background:var(--primary);padding:.9rem 1.5rem;display:flex;align-items:center;gap:1rem;z-index:200;box-shadow:0 -4px 24px rgba(0,0,0,.2)}
+    .publish-status{color:rgba(255,255,255,.6);font-size:.85rem;flex:1}
+    .publish-status strong{color:var(--accent)}
+    #publishMsg{font-size:.85rem;padding:.4rem .85rem;border-radius:6px;display:none}
+    #publishMsg.ok{background:rgba(5,150,105,.15);color:#6ee7b7;display:inline-block}
+    #publishMsg.err{background:rgba(220,38,38,.15);color:#fca5a5;display:inline-block}
+  </style>
+</head>
+<body>
+
+<!-- ═══ LOGIN ═══ -->
+<div class="login-page" id="loginPage">
+  <div class="login-box">
+    <div style="font-size:2.5rem;margin-bottom:.75rem">📦</div>
+    <h1>Conteneur Service</h1>
+    <p>Panneau d'administration</p>
+    <p class="login-error" id="loginError">Mot de passe incorrect.</p>
+    <input type="password" id="loginInput" placeholder="Mot de passe" autocomplete="current-password">
+    <button class="btn btn--primary" style="width:100%;justify-content:center" onclick="doLogin()">Connexion →</button>
+  </div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div id="app">
+  <div class="topbar">
+    <div class="topbar__logo">📦 Conteneur Service <span class="topbar__badge">ADMIN</span></div>
+    <div class="topbar__actions">
+      <a href="index.html" target="_blank" class="btn btn--ghost">👁 Voir le site</a>
+      <button class="btn btn--ghost" onclick="doLogout()">Déconnexion</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('containers')">📦 Conteneurs</div>
+    <div class="tab" onclick="showTab('contact')">📞 Infos contact</div>
+    <div class="tab" onclick="showTab('settings')">⚙️ Paramètres</div>
+  </div>
+
+  <!-- TAB: CONTENEURS -->
+  <div class="tab-panel active" id="tab-containers">
+
+    <div class="add-section" id="addSection">
+      <h3>+ Ajouter un conteneur</h3>
+      <div class="form-grid" style="margin-bottom:1rem">
+        <div class="form-group">
+          <label>Nom *</label>
+          <input type="text" id="new_name" placeholder="Conteneur 20' Standard">
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <select id="new_type">
+            <option value="vente">Vente</option>
+            <option value="location">Location</option>
+            <option value="amenage">Aménagé</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Taille</label>
+          <select id="new_size">
+            <option value="20ft">20 pieds</option>
+            <option value="40ft">40 pieds</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Badge</label>
+          <select id="new_badge">
+            <option value="dispo">Disponible</option>
+            <option value="loc">Location</option>
+            <option value="special">Sur mesure</option>
+            <option value="reserve">Réservé</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Prix (€ HT, 0 = sur devis)</label>
+          <input type="number" id="new_price" placeholder="1850" min="0">
+        </div>
+        <div class="form-group">
+          <label>Unité prix</label>
+          <input type="text" id="new_priceUnit" placeholder="HT · port compris">
+        </div>
+        <div class="form-group span-3">
+          <label>Tags (séparés par virgule)</label>
+          <input type="text" id="new_tags" placeholder="20 pieds, Standard, Occasion">
+        </div>
+        <div class="form-group span-3">
+          <label>URL de l'image</label>
+          <input type="url" id="new_image" placeholder="https://..." oninput="previewNewImg(this.value)">
+          <div class="img-preview" id="new_img_preview">Aperçu image</div>
+        </div>
+        <div class="form-group span-3">
+          <label>Caractéristiques techniques (1 par ligne)</label>
+          <textarea id="new_specs" rows="3" placeholder="📐 5,90 × 2,35 m&#10;⚖️ Tare 2 200 kg&#10;📦 Volume 33 m³"></textarea>
+        </div>
+      </div>
+      <button class="btn btn--primary" onclick="addContainer()">Ajouter au catalogue</button>
+    </div>
+
+    <div id="containersList"></div>
+  </div>
+
+  <!-- TAB: CONTACT -->
+  <div class="tab-panel" id="tab-contact">
+
+    <!-- Réception devis -->
+    <div class="card" style="border:2px solid var(--accent)">
+      <div class="card__header">
+        <div class="card__title">📬 Réception des devis clients</div>
+      </div>
+      <p style="color:var(--text-light);font-size:.88rem;margin-bottom:1.25rem;line-height:1.65">Ces paramètres définissent où arrivent les demandes de devis envoyées par les visiteurs.</p>
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>📧 Email qui reçoit les devis</label>
+          <input type="email" id="c_quoteEmail" placeholder="votre@email.com">
+          <small style="color:var(--text-light);font-size:.78rem;margin-top:.3rem;display:block">Cet email recevra toutes les demandes de devis par email.</small>
+        </div>
+        <div class="form-group">
+          <label>💬 Numéro WhatsApp (sans + ni espaces)</label>
+          <input type="text" id="c_whatsapp" placeholder="33612345678">
+          <small style="color:var(--text-light);font-size:.78rem;margin-top:.3rem;display:block">Ex : 33612345678 pour le +33 6 12 34 56 78</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Infos affichées -->
+    <div class="card" style="margin-top:1.25rem">
+      <div class="card__header">
+        <div class="card__title">🏢 Informations affichées sur le site</div>
+      </div>
+      <div class="contact-form-grid">
+        <div class="form-group">
+          <label>Téléphone affiché</label>
+          <input type="text" id="c_phone" placeholder="+33 0 00 00 00 00">
+        </div>
+        <div class="form-group">
+          <label>Email affiché</label>
+          <input type="email" id="c_email" placeholder="contact@conteneurservice.fr">
+        </div>
+        <div class="form-group">
+          <label>Adresse / Ville</label>
+          <input type="text" id="c_address" placeholder="Paris, Île-de-France">
+        </div>
+        <div class="form-group">
+          <label>Horaires</label>
+          <input type="text" id="c_hours" placeholder="Lun – Ven · 8h à 18h">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TAB: PARAMÈTRES -->
+  <div class="tab-panel" id="tab-settings">
+    <div class="card settings-section">
+      <div class="card__header"><div class="card__title">🐙 Publication GitHub</div></div>
+      <div style="margin-bottom:1rem;color:var(--text-light);font-size:.88rem;line-height:1.65">
+        Entrez votre <strong>Personal Access Token GitHub</strong> pour publier les modifications directement sur le dépôt. Vercel redéploie automatiquement.
+      </div>
+      <div class="form-group" style="margin-bottom:1rem">
+        <label>Token GitHub (PAT)</label>
+        <input type="password" id="gh_token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+      </div>
+      <div class="form-group" style="margin-bottom:1.25rem">
+        <label>Dépôt (owner/repo)</label>
+        <input type="text" id="gh_repo" placeholder="votreuser/conteneur-site">
+      </div>
+      <button class="btn btn--primary btn--sm" onclick="saveGHSettings()">Enregistrer</button>
+    </div>
+
+    <div class="card settings-section" style="margin-top:1.25rem">
+      <div class="card__header"><div class="card__title">🔐 Mot de passe admin</div></div>
+      <div class="form-group" style="margin-bottom:1rem">
+        <label>Nouveau mot de passe</label>
+        <input type="password" id="new_pwd" placeholder="Nouveau mot de passe">
+      </div>
+      <div class="form-group" style="margin-bottom:1.25rem">
+        <label>Confirmer</label>
+        <input type="password" id="new_pwd2" placeholder="Confirmer">
+      </div>
+      <button class="btn btn--primary btn--sm" onclick="changePwd()">Changer</button>
+      <span id="pwd_msg" style="margin-left:.75rem;font-size:.85rem"></span>
+    </div>
+  </div>
+
+  <!-- Publish bar -->
+  <div class="publish-bar">
+    <div class="publish-status">Modifications non publiées — <strong>Publiez pour mettre à jour le site</strong></div>
+    <span id="publishMsg"></span>
+    <button class="btn btn--ghost btn--sm" onclick="previewChanges()">👁 Prévisualiser</button>
+    <button class="btn btn--primary" onclick="doPublish()">🚀 Publier</button>
+  </div>
+  <div style="height:60px"></div>
+</div>
+
+<script>
+'use strict';
+
+/* ═══════════════ AUTH ═══════════════ */
+const DEFAULT_PWD = 'carmo2026';
+function getPwd() { return localStorage.getItem('cs_admin_pwd') || DEFAULT_PWD; }
+
+function doLogin() {
+  const val = document.getElementById('loginInput').value;
+  if (val === getPwd()) {
+    localStorage.setItem('cs_admin_ok', '1');
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    initApp();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+document.getElementById('loginInput').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+function doLogout() {
+  localStorage.removeItem('cs_admin_ok');
+  location.reload();
+}
+
+function changePwd() {
+  const a = document.getElementById('new_pwd').value;
+  const b = document.getElementById('new_pwd2').value;
+  const msg = document.getElementById('pwd_msg');
+  if (!a) { msg.textContent = 'Entrez un mot de passe.'; msg.style.color = '#dc2626'; return; }
+  if (a !== b) { msg.textContent = 'Les mots de passe ne correspondent pas.'; msg.style.color = '#dc2626'; return; }
+  localStorage.setItem('cs_admin_pwd', a);
+  msg.textContent = '✅ Mot de passe changé.'; msg.style.color = '#059669';
+  document.getElementById('new_pwd').value = '';
+  document.getElementById('new_pwd2').value = '';
+}
+
+/* ═══════════════ TABS ═══════════════ */
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    const panels = ['containers','contact','settings'];
+    t.classList.toggle('active', panels[i] === name);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+/* ═══════════════ DATA ═══════════════ */
+let siteData = { containers: [], contact: {} };
+
+async function loadData() {
+  /* Essaie fetch, sinon lit window.SITE_DATA (local) */
+  if (location.protocol !== 'file:') {
+    try {
+      const r = await fetch('data.json?t=' + Date.now());
+      if (r.ok) { siteData = await r.json(); return; }
+    } catch(e) {}
+  }
+  siteData = JSON.parse(JSON.stringify(window.SITE_DATA || { containers:[], contact:{} }));
+}
+
+function saveLocal() {
+  localStorage.setItem('cs_admin_data', JSON.stringify(siteData));
+}
+
+/* ═══════════════ INIT ═══════════════ */
+async function initApp() {
+  await loadData();
+  renderContainers();
+  renderContact();
+  loadGHSettings();
+}
+
+/* ═══════════════ CONTAINERS ═══════════════ */
+const BADGE_CLASSES = { dispo:'badge-dispo', loc:'badge-loc', special:'badge-special', reserve:'badge-reserve' };
+const BADGE_LABELS  = { dispo:'Disponible', loc:'Location', special:'Sur mesure', reserve:'Réservé' };
+
+function renderContainers() {
+  const list = document.getElementById('containersList');
+  if (!siteData.containers.length) {
+    list.innerHTML = '<p style="color:var(--text-light);padding:1rem">Aucun conteneur. Ajoutez-en un ci-dessus.</p>';
+    return;
+  }
+  list.innerHTML = siteData.containers.map((c, i) => `
+    <div class="card" id="card_${i}">
+      <div class="card__header">
+        <span class="badge-preview ${BADGE_CLASSES[c.badge] || 'badge-dispo'}">${BADGE_LABELS[c.badge] || c.badge}</span>
+        <div class="card__title">${c.name}</div>
+        <div class="card__actions">
+          <button class="btn btn--danger btn--sm" onclick="removeContainer(${i})">🗑 Supprimer</button>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Nom</label>
+          <input type="text" value="${esc(c.name)}" oninput="siteData.containers[${i}].name=this.value;saveLocal()">
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <select onchange="siteData.containers[${i}].type=this.value;saveLocal()">
+            ${['vente','location','amenage'].map(v=>`<option value="${v}"${c.type===v?' selected':''}>${v.charAt(0).toUpperCase()+v.slice(1)}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Taille</label>
+          <select onchange="siteData.containers[${i}].size=this.value;saveLocal()">
+            ${['20ft','40ft'].map(v=>`<option value="${v}"${c.size===v?' selected':''}>${v}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Badge</label>
+          <select onchange="siteData.containers[${i}].badge=this.value;document.getElementById('card_${i}').querySelector('.badge-preview').className='badge-preview '+(BADGE_CLASSES[this.value]||'badge-dispo');document.getElementById('card_${i}').querySelector('.badge-preview').textContent=BADGE_LABELS[this.value]||this.value;saveLocal()">
+            ${Object.entries(BADGE_LABELS).map(([v,l])=>`<option value="${v}"${c.badge===v?' selected':''}>${l}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Prix (0 = sur devis)</label>
+          <input type="number" value="${c.price}" min="0" oninput="siteData.containers[${i}].price=parseInt(this.value)||0;saveLocal()">
+        </div>
+        <div class="form-group">
+          <label>Unité prix</label>
+          <input type="text" value="${esc(c.priceUnit)}" oninput="siteData.containers[${i}].priceUnit=this.value;saveLocal()">
+        </div>
+        <div class="form-group span-3">
+          <label>Tags (séparés par virgule)</label>
+          <input type="text" value="${esc((c.tags||[]).join(', '))}" oninput="siteData.containers[${i}].tags=this.value.split(',').map(t=>t.trim()).filter(Boolean);saveLocal()">
+        </div>
+        <div class="form-group span-3">
+          <label>URL de l'image</label>
+          <input type="url" value="${esc(c.image||'')}" placeholder="https://..." oninput="siteData.containers[${i}].image=this.value;updateImgPreview(${i},this.value);saveLocal()">
+          <div class="img-preview" id="imgprev_${i}">
+            ${c.image ? `<img src="${esc(c.image)}" alt="">` : 'Aucune image — entrez une URL'}
+          </div>
+        </div>
+        <div class="form-group span-3">
+          <label>Caractéristiques (1 par ligne)</label>
+          <textarea rows="3" oninput="siteData.containers[${i}].specs=this.value.split('\\n').filter(Boolean);saveLocal()">${esc((c.specs||[]).join('\n'))}</textarea>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateImgPreview(i, url) {
+  const el = document.getElementById('imgprev_' + i);
+  if (!el) return;
+  el.innerHTML = url ? `<img src="${esc(url)}" alt="" onerror="this.parentElement.textContent='Image introuvable'">` : 'Aucune image';
+}
+
+function previewNewImg(url) {
+  const el = document.getElementById('new_img_preview');
+  el.innerHTML = url ? `<img src="${esc(url)}" alt="" onerror="this.parentElement.textContent='Image introuvable'">` : 'Aperçu image';
+}
+
+function removeContainer(i) {
+  if (!confirm('Supprimer ce conteneur ?')) return;
+  siteData.containers.splice(i, 1);
+  saveLocal();
+  renderContainers();
+}
+
+function addContainer() {
+  const name  = document.getElementById('new_name').value.trim();
+  if (!name) { alert('Le nom est requis.'); return; }
+  const specs = document.getElementById('new_specs').value.split('\n').filter(Boolean);
+  const tags  = document.getElementById('new_tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  const badge = document.getElementById('new_badge').value;
+  siteData.containers.push({
+    id:        'c_' + Date.now(),
+    name,
+    type:      document.getElementById('new_type').value,
+    size:      document.getElementById('new_size').value,
+    badge,
+    badgeText: BADGE_LABELS[badge] || badge,
+    price:     parseInt(document.getElementById('new_price').value) || 0,
+    priceUnit: document.getElementById('new_priceUnit').value || 'HT',
+    tags,
+    image:     document.getElementById('new_image').value,
+    specs
+  });
+  saveLocal();
+  renderContainers();
+  ['new_name','new_price','new_priceUnit','new_tags','new_image','new_specs'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('new_img_preview').innerHTML = 'Aperçu image';
+  document.getElementById('containersList').scrollIntoView({ behavior:'smooth' });
+}
+
+/* ═══════════════ CONTACT ═══════════════ */
+function renderContact() {
+  const c = siteData.contact || {};
+  document.getElementById('c_quoteEmail').value = c.quoteEmail || '';
+  document.getElementById('c_whatsapp').value   = c.whatsapp   || '';
+  document.getElementById('c_phone').value      = c.phone      || '';
+  document.getElementById('c_email').value      = c.email      || '';
+  document.getElementById('c_address').value    = c.address    || '';
+  document.getElementById('c_hours').value      = c.hours      || '';
+  ['c_quoteEmail','c_whatsapp','c_phone','c_email','c_address','c_hours'].forEach(id => {
+    document.getElementById(id).addEventListener('input', function() {
+      const key = id.replace('c_','');
+      if (!siteData.contact) siteData.contact = {};
+      siteData.contact[key] = this.value;
+      saveLocal();
+    });
+  });
+}
+
+/* ═══════════════ SETTINGS ═══════════════ */
+function saveGHSettings() {
+  localStorage.setItem('cs_gh_token', document.getElementById('gh_token').value);
+  localStorage.setItem('cs_gh_repo',  document.getElementById('gh_repo').value);
+  alert('✅ Paramètres GitHub enregistrés.');
+}
+function loadGHSettings() {
+  document.getElementById('gh_token').value = localStorage.getItem('cs_gh_token') || '';
+  document.getElementById('gh_repo').value  = localStorage.getItem('cs_gh_repo')  || '';
+}
+
+/* ═══════════════ PREVIEW ═══════════════ */
+function previewChanges() {
+  localStorage.setItem('cs_preview_data', JSON.stringify(siteData));
+  window.open('index.html?preview=1', '_blank');
+}
+
+/* ═══════════════ PUBLISH ═══════════════ */
+function buildDataJs(data) {
+  return `/* Données du catalogue — modifiables depuis admin.html */\nwindow.SITE_DATA = ${JSON.stringify(data, null, 2)};\n`;
+}
+
+async function publishFile(token, repo, path, content, commitMsg) {
+  const getR = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+    headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
+  });
+  const sha = getR.ok ? (await getR.json()).sha : undefined;
+  const b64  = btoa(unescape(encodeURIComponent(content)));
+  const body = { message: commitMsg, content: b64 };
+  if (sha) body.sha = sha;
+  return fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+    method: 'PUT',
+    headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+}
+
+async function doPublish() {
+  const token = localStorage.getItem('cs_gh_token');
+  const repo  = localStorage.getItem('cs_gh_repo');
+  const msg   = document.getElementById('publishMsg');
+
+  if (!token || !repo) {
+    msg.textContent = '⚠️ Configurez le token GitHub dans Paramètres.';
+    msg.className = 'err'; return;
+  }
+
+  msg.textContent = '⏳ Publication en cours...';
+  msg.className = '';
+  msg.style.display = 'inline-block';
+
+  try {
+    const commitMsg = '📦 Admin: mise à jour catalogue – ' + new Date().toLocaleDateString('fr-FR');
+    const [r1, r2] = await Promise.all([
+      publishFile(token, repo, 'data.json', JSON.stringify(siteData, null, 2), commitMsg),
+      publishFile(token, repo, 'js/data.js', buildDataJs(siteData), commitMsg)
+    ]);
+    if (r1.ok && r2.ok) {
+      msg.textContent = '✅ Publié ! Vercel redéploie automatiquement.';
+      msg.className = 'ok';
+    } else {
+      const err = await (r1.ok ? r2 : r1).json();
+      msg.textContent = '❌ ' + (err.message || 'Erreur de publication');
+      msg.className = 'err';
+    }
+  } catch(e) {
+    msg.textContent = '❌ Erreur réseau : ' + e.message;
+    msg.className = 'err';
+  }
+}
+
+/* ═══════════════ UTILS ═══════════════ */
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+/* ═══════════════ START ═══════════════ */
+if (localStorage.getItem('cs_admin_ok') === '1') {
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  initApp();
+}
+</script>
+</body>
+</html>
